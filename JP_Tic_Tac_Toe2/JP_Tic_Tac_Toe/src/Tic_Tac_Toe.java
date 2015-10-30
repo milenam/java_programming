@@ -6,6 +6,8 @@ public class Tic_Tac_Toe {
 
 	public static void main(String[] args) {
 		int[][] board = new int[][]{{1,2,3},{4,5,6},{7,8,9}};
+		//System.out.println(Arrays.deepToString(board));
+		System.out.println(Arrays.toString(board[0]));
 		String pos = null;
 		boolean user = false;
 		boolean comp = false;
@@ -43,25 +45,30 @@ public class Tic_Tac_Toe {
 	public static boolean isOneInColumnLeft(ArrayList sb, int[][] board, int counter) {
 		//int temp;
 		int temp2;
-		for (int i = 1; i <= board.length; i++) {
-			for (int j = 1; j <= board[i].length; j++) {
-				System.out.println("cell" + sb.get(board[i][j]));
-				if (sb.get(board[i][j]) == "X") {
-					
-					counter++;
-					System.out.println("counter" + counter);
-					return false;
-//					if (counter == 2) {
-//						for (int j2 = 1; j2 < 4; j2++) {
-//							if(isTaken(sb, j2) == true) {
-//								temp2 = board[i][j2];
-//								sb.set(temp2, "O");
-//								return false;
-//							} 
-//						}
-//					}
+		//System.out.println("board " + board);
+		for (int i = 1; i <= 3; i++) {
+			counter = 0;
+			for (int j = 1; j <= 3; j++) {
+//				System.out.println("board " + board[i][j]);
+				if (sb.get(j) == "X") {
+					counter++;					
+					if (counter == 1) {
+						if(isTaken(sb, j) == true) {
+						System.out.println("jr" + j);
+						  sb.set(j, "O");
+						  return true;
+					    }
+						//return true;
+						//for (int j2 = 1; j2 < 4; j2++) {
+						//	if(isTaken(sb, j2) == true) {
+//						//		temp2 = board[j2];
+						//		sb.set(j2, "O");
+						//		return true;
+						//	} 
+						//}
+					}
 				} else {
-					return true;
+					continue;
 				}
 		    }
 		}
@@ -75,13 +82,11 @@ public class Tic_Tac_Toe {
 		  
 		} else if (comp) {
 			int rand;
+			isOneInColumnLeft(sb, board, counter);
 			while (true) {
-				//System.out.println("begin local" + localCount);
-				//if (localCount == 9) {
-				//	break;
-				//}
 				rand = randInt(1, sb.size());
 				System.out.println("rand" + rand);
+				
 				if (isTaken(sb, rand) == true) {
 				  sb.set(rand-1, "O");
 				  break;
@@ -90,6 +95,7 @@ public class Tic_Tac_Toe {
 					continue;
 				}
 			}
+		 
 		}
 		System.out.println(sb);
 	    StringBuilder boardToString = new StringBuilder();
@@ -119,11 +125,11 @@ public class Tic_Tac_Toe {
 			newBoard = updateBoard(board, sb, index, user=false, comp=true, counter);
 			JLabel m = new JLabel("<html>Computer has played" + newBoard + "</html>", SwingConstants.CENTER);
 			int dialog3 = JOptionPane.showConfirmDialog(null, m);
-			if (isOneInColumnLeft(sb, board, counter) == false) {
-		      System.out.println("comp won!");
-			} else {
+			//if (isOneInColumnLeft(sb, board, counter) == true) {
+		    //  System.out.println("true");
+			//} else {
 			  recursive(dialog, pos, newBoard, sb, user, comp, board, counter);
-			}
+			//}
 		}
 	}
 }
